@@ -27,12 +27,14 @@ type
     Label4: TLabel;
     Memo2: TMemo;
     Button4: TButton;
+    MyDataSource1: TMyDataSource;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure ListBox1DblClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     //procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -238,6 +240,13 @@ CloseFile(sin_file);
 }
 
 
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+MyQuery1.Connection := MyConnection1;
+MyQuery1.SQL.Text := 'INSERT INTO node_revision VALUES ("","","1","пробник","","","1","2","1","0")';
+MyQuery1.Execute;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);

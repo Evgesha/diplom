@@ -1,4 +1,5 @@
 object Form1: TForm1
+  AlignWithMargins = True
   Left = 0
   Top = 0
   Caption = 'Form1'
@@ -95,6 +96,7 @@ object Form1: TForm1
     Height = 25
     Caption = 'Button2'
     TabOrder = 5
+    OnClick = Button2Click
   end
   object Button3: TButton
     Left = 416
@@ -135,6 +137,7 @@ object Form1: TForm1
     Database = 'vik'
     Username = 'root'
     Server = 'localhost'
+    Connected = True
     Left = 16
     Top = 8
   end
@@ -151,6 +154,10 @@ object Form1: TForm1
   end
   object OpenDialog1: TOpenDialog
     Left = 248
+    Top = 8
+  end
+  object MyDataSource1: TMyDataSource
+    Left = 184
     Top = 8
   end
 end
