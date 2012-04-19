@@ -1,0 +1,16 @@
+program Client_site;
+
+uses
+  Vcl.Forms,
+  main in 'main.pas' {Form1},
+  SQLite3 in 'SQLite3.pas',
+  SQLiteTable3 in 'SQLiteTable3.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

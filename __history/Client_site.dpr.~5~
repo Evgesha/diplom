@@ -1,0 +1,19 @@
+program Client_site;
+
+uses
+  Vcl.Forms,
+  main in 'main.pas' {Form1},
+  SLTypes in 'D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLTypes.pas',
+  SLDataSet in 'D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDataSet.pas',
+  SLDB in 'D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDB.pas',
+  SLEngine in 'D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLEngine.pas',
+  SLFunAgr in 'D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLFunAgr.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.
