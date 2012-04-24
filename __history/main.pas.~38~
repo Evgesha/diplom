@@ -58,7 +58,7 @@ var
   str: string; //рабочая строка
   str_rub: string; //строка с рубриками
   fl: integer; //флаг выхода из цикла обработки рубрик
-  //i, j, k, l: integer; //счетчики для циклов
+  i, j, k: integer; //счетчики для циклов
   lg: integer; //длина строки
   mas_alf: array [0..32] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я');
   mas: array of string;    //массив расширенной выборки
@@ -70,75 +70,13 @@ implementation
 
 uses edit;
 
-procedure racshirenie(s: string);
-var i,j,k:integer;
-begin
-  SetLength(mas, length(s)*33+length(s)+(length(s)+1)*33+(length(s)-1));
-  k:=0;
-  for i:=1 to length(s) do        //замена
-    begin
-    for j:=0 to 32 do
-      begin
-      mas[k]:=StuffString(s, i, 1, mas_alf[j]);
-      inc(k);
-      end;
-    end;
-
-  for i:=1 to length(s) do        //удаление
-      begin
-      mas[k]:=s;
-      Delete(mas[k], i, 1);
-      inc(k);
-      end;
-
-  for i:=1 to length(s)+1 do        //вставка
-    begin
-    for j:=0 to 32 do
-      begin
-      mas[k]:=StuffString(s, i, 0, mas_alf[j]);
-      inc(k);
-      end;
-    end;
-
-  for i:=1 to length(s)-1 do        //перестановка
-      begin
-      b:=s;
-      a:=s[i+1];
-      insert(a,b,i);
-      delete(b,i+2,1);
-      mas[k]:=b;
-      inc(k);
-      end;
-
-end;
-
-procedure poisk(s: string; x:integer);
-var j:integer;
-begin
-  for j:=0 to length(sin_mas)-1 do     //поиск id родителя по файлу
-    if sin_mas[j].txt=s then begin fl:=sin_mas[j].parent; break; end;
-
-  for j:=0 to length(sin_mas)-1 do    //поиск родителя
-    if sin_mas[j].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[j].txt;  break; end;
-end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-//Удмуртия, в ленту, бюджет
-//добавить в файл
-
-{sin_word.id:=12;
-sin_word.parent:=9;
-sin_word.txt:='буджет';
-
-AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat');
-Reset(sin_file);
-Seek(sin_file,FileSize(sin_file));  //переход на конец файла
-write(sin_file, sin_word);
-CloseFile(sin_file);
-}
-
 {
+
+работа со строками
+st:=Copy(s,1,AnsiPos('#',s)-1);
+Delete(s,1,AnsiPos('#',s));
+
+//////
 
 function DelDat(c:integer):integer;
 begin
@@ -289,20 +227,83 @@ end;
 
 }
 
+Function delprobel(s:string):string;
+begin
+ while s[1]=' ' do Delete(s,1,1);
+ while s[length(s)]=' ' do Delete(s,length(s),1);
+ Result:=s;
+end;
+
+procedure racshirenie(s: string);
+begin
+  SetLength(mas, length(s)*33+length(s)+(length(s)+1)*33+(length(s)-1));
+  k:=0;
+  for i:=1 to length(s) do        //замена
+    begin
+    for j:=0 to 32 do
+      begin
+      mas[k]:=StuffString(s, i, 1, mas_alf[j]);
+      inc(k);
+      end;
+    end;
+
+  for i:=1 to length(s) do        //удаление
+      begin
+      mas[k]:=s;
+      Delete(mas[k], i, 1);
+      inc(k);
+      end;
+
+  for i:=1 to length(s)+1 do        //вставка
+    begin
+    for j:=0 to 32 do
+      begin
+      mas[k]:=StuffString(s, i, 0, mas_alf[j]);
+      inc(k);
+      end;
+    end;
+
+  for i:=1 to length(s)-1 do        //перестановка
+      begin
+      b:=s;
+      a:=s[i+1];
+      insert(a,b,i);
+      delete(b,i+2,1);
+      mas[k]:=b;
+      inc(k);
+      end;
+
+end;
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+//Удмуртия, в ленту, бюджет
+//добавить в файл
+
+{sin_word.id:=12;
+sin_word.parent:=9;
+sin_word.txt:='буджет';
+
+AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat');
+Reset(sin_file);
+Seek(sin_file,FileSize(sin_file));  //переход на конец файла
+write(sin_file, sin_word);
+CloseFile(sin_file);
+}
+
+
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-//добавление в таблицу
-{
 MyQuery1.Connection := MyConnection1;
 MyQuery1.SQL.Text := 'INSERT INTO node_revision VALUES ("","","1","пробник","","","1","2","1","0")';
-MyQuery1.Execute;     }
+MyQuery1.Execute;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var COM_Word: olevariant;
-    j, l, i: integer;
 begin
   try
     if OpenDialog1.Execute then
@@ -340,54 +341,53 @@ for i:=1 to lg do                         // если тэги
   end;
 Edit2.Text:=str;
 
+//racshirenie('крокодил');
 
+//fl:=0;
 Repeat     //разделяем слова по запятым. Точка - конец строки с рубриками
  begin
   a:=Copy(str_rub,1,AnsiPos(',',str_rub)-1);
-  a:=Trim(a);
-  a:=AnsiLowerCase(a);
+  a:=delprobel(a);
+  AnsiLowerCase(a);
   ListBox1.Items.Add(a);
   Delete(str_rub,1,AnsiPos(',',str_rub));
   if AnsiPos(',',str_rub)=0 then
       begin
+      //fl:=1;
       a:=Copy(str_rub,1,AnsiPos('.',str_rub)-1);
-      a:=Trim(a);
-      a:=AnsiLowerCase(a);
+      a:=delprobel(a);
+      AnsiLowerCase(a);
       ListBox1.Items.Add(a);
       end;
  end;
 until AnsiPos(',',str_rub)=0;
 
+showmessage(str_rub);
 
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
+for i:=0 to ListBox1.Count-1 do
+begin
+str_rub:=ListBox1.Items[i];
+fl:=0;
 Reset(sin_file);
 Seek(sin_file,0);
-i:=0;
-while not Eof(sin_file) do
-begin
-  Setlength(sin_mas,i+1);
-  read(sin_file, sin_word);
-  sin_mas[i]:=sin_word;
-  inc(i);
-end;
-CloseFile(sin_file);      //закрыли файл, дальше работаем с массивом
+ while not Eof(sin_file) do     //поиск id родителя по файлу
+    begin
+      read(sin_file, sin_word);
+      if sin_word.txt=str_rub then begin fl:=sin_word.parent;  break; end;
+    end;
 
-for l:=0 to ListBox1.Count-1 do
-begin
-  fl:=-1;
-  poisk(ListBox1.Items[l], l);
-  if fl=-1 then begin
-                racshirenie(ListBox1.Items[l]);
-                for j:=0 to length(mas)-1 do
-                begin
-                  poisk(mas[j], l);
-                  if fl<>-1 then break;
-                end;
-                end;
-
+Reset(sin_file);
+ while not Eof(sin_file) do    //поиск родителя
+    begin
+      read(sin_file, sin_word);
+      if sin_word.id=fl then begin ListBox1.Items[i]:=sin_word.txt;  break; end;
+    end;
+    
+  
 end;
 
-
+CloseFile(sin_file);
 //showmessage(str_rub+'='+sin_word.txt);
 
 end;

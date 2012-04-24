@@ -58,7 +58,7 @@ var
   str: string; //рабочая строка
   str_rub: string; //строка с рубриками
   fl: integer; //флаг выхода из цикла обработки рубрик
-  //i, j, k, l: integer; //счетчики для циклов
+  i, j, k: integer; //счетчики для циклов
   lg: integer; //длина строки
   mas_alf: array [0..32] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я');
   mas: array of string;    //массив расширенной выборки
@@ -71,7 +71,6 @@ implementation
 uses edit;
 
 procedure racshirenie(s: string);
-var i,j,k:integer;
 begin
   SetLength(mas, length(s)*33+length(s)+(length(s)+1)*33+(length(s)-1));
   k:=0;
@@ -112,15 +111,6 @@ begin
 
 end;
 
-procedure poisk(s: string; x:integer);
-var j:integer;
-begin
-  for j:=0 to length(sin_mas)-1 do     //поиск id родителя по файлу
-    if sin_mas[j].txt=s then begin fl:=sin_mas[j].parent; break; end;
-
-  for j:=0 to length(sin_mas)-1 do    //поиск родителя
-    if sin_mas[j].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[j].txt;  break; end;
-end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
@@ -302,7 +292,6 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var COM_Word: olevariant;
-    j, l, i: integer;
 begin
   try
     if OpenDialog1.Execute then
@@ -372,19 +361,15 @@ begin
 end;
 CloseFile(sin_file);      //закрыли файл, дальше работаем с массивом
 
-for l:=0 to ListBox1.Count-1 do
+for i:=0 to ListBox1.Count-1 do
 begin
-  fl:=-1;
-  poisk(ListBox1.Items[l], l);
-  if fl=-1 then begin
-                racshirenie(ListBox1.Items[l]);
-                for j:=0 to length(mas)-1 do
-                begin
-                  poisk(mas[j], l);
-                  if fl<>-1 then break;
-                end;
-                end;
+  fl:=0;
+  str_rub:=ListBox1.Items[i];
+  for j:=0 to length(sin_mas)-1 do     //поиск id родителя по файлу
+    if sin_mas[j].txt=str_rub then begin fl:=sin_mas[j].parent; break; end;
 
+  for j:=0 to length(sin_mas)-1 do    //поиск родителя
+    if sin_mas[j].id=fl then begin ListBox1.Items[i]:=sin_mas[j].txt;  break; end;
 end;
 
 
