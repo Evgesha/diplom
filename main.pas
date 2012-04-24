@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, DBAccess, MyAccess, MemDS,
-  Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus;
+  Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils;
 
 type
   TForm1 = class(TForm)
@@ -58,7 +58,10 @@ var
   str: string; //рабочая строка
   str_rub: string; //строка с рубриками
   fl: integer; //флаг выхода из цикла обработки рубрик
-  i: integer; //счетчик для циклов
+  i, j, k: integer; //счетчики для циклов
+  lg: integer; //длина строки
+  mas_alf: array [0..32] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я');
+
 
 implementation
 
@@ -223,6 +226,67 @@ end;
 
 }
 
+procedure racshirenie(s: string);
+var mas: array of string;
+    a, b: string;
+begin
+  SetLength(mas, length(s)*33+length(s)+(length(s)+1)*33+(length(s)-1));
+  //showmessage(inttostr(Length(mas)));
+  k:=0;
+  for i:=1 to length(s) do        //замена
+    begin
+    for j:=0 to 32 do
+      begin
+      mas[k]:=StuffString(s, i, 1, mas_alf[j]);
+      k:=k+1;
+      end;
+    end;
+  showmessage(mas[k-1]);
+
+  for i:=1 to length(s) do        //удаление
+      begin
+      mas[k]:=s;
+      Delete(mas[k], i, 1);
+      k:=k+1;
+      end;
+  showmessage(mas[k-1]);
+
+  for i:=1 to length(s)+1 do        //вставка
+    begin
+    for j:=0 to 32 do
+      begin
+      mas[k]:=StuffString(s, i, 0, mas_alf[j]);
+      k:=k+1;
+      end;
+    end;
+   showmessage(mas[k-1]);
+
+  for i:=1 to length(s)-1 do        //перестановка
+      begin
+      b:=s;
+      a:=s[i+1];
+      insert(a,b,i);
+      delete(b,i+2,1);
+      mas[k]:=b;
+      k:=k+1;
+      showmessage(mas[k-1]);
+      end;
+ // showmessage(mas[k-1]);
+end;
+
+{begin
+for i:=0 to length(str) do  begin
+  if i=start then begin
+   s:=str[i];  end;
+  if i=finish then begin
+  insert(str[i],str,start);
+   str[i+1]:=s; end;
+end;
+delete(str,start+1,1);
+result:=str;
+end;
+}
+
 procedure TForm1.Button1Click(Sender: TObject);
 begin
 //Удмуртия, в ленту, бюджет
@@ -279,7 +343,16 @@ Delete(str,1,AnsiPos('[',str)); //удаляем заг
 Memo1.Lines.Text:=Copy(str,1,AnsiPos(']',str)-1); //копируем тело
 
 Delete(str,1,AnsiPos('[',str)); //удаляем тело
-Edit2.Text:=Copy(str,1,AnsiPos(']',str)-1);  //копируем тэги
+str:=Copy(str,1,AnsiPos(']',str)-1);  //копируем тэги
+lg:=length(str);                          // на случай
+for i:=1 to lg do                         // если тэги
+  begin                                   // написаны
+  if str[i]=#13 then str[i]:=' ';         // по старинке
+  if str[i]=#10 then str[i]:=' ';         // в столбик
+  end;
+Edit2.Text:=str;
+
+racshirenie('крокодил');
 
 fl:=0;
 Repeat     //разделяем слова по запятым. Точка - конец строки с рубриками
@@ -294,7 +367,6 @@ Repeat     //разделяем слова по запятым. Точка - конец строки с рубриками
       end;
  end;
 until fl=1;
-
 
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
 for i:=0 to ListBox1.Count-1 do
