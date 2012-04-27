@@ -40,6 +40,7 @@ type
     procedure ListBox1DblClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     //procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -403,6 +404,23 @@ end;
 procedure TForm1.Button4Click(Sender: TObject);
 begin
 Form2.Show;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var i:integer;
+begin
+sin_word.txt:= InputBox('Добавление новой рубрики', '', '');
+
+AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+i:=0;
+while not Eof(sin_file) do  inc(i);
+sin_word.id:=i+1;
+sin_word.parent:=0;
+
+write(sin_file, sin_word);
+CloseFile(sin_file);
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);

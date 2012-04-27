@@ -148,6 +148,7 @@ object Form1: TForm1
     Height = 25
     Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1088#1091#1073#1088#1080#1082#1091
     TabOrder = 10
+    OnClick = Button5Click
   end
   object Button6: TButton
     Left = 448
