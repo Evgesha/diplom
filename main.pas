@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, DBAccess, MyAccess, MemDS,
-  Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils;
+  Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils,
+  Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
@@ -28,6 +29,9 @@ type
     Memo2: TMemo;
     Button4: TButton;
     MyDataSource1: TMyDataSource;
+    Image1: TImage;
+    Button5: TButton;
+    Button6: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -35,6 +39,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure ListBox1DblClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
     //procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -60,7 +65,7 @@ var
   fl: integer; //флаг выхода из цикла обработки рубрик
   //i, j, k, l: integer; //счетчики для циклов
   lg: integer; //длина строки
-  mas_alf: array [0..32] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я');
+  mas_alf: array [0..33] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',' ');
   mas: array of string;    //массив расширенной выборки
   a, b: string;    //рабочие переменные
 
@@ -73,11 +78,11 @@ uses edit;
 procedure racshirenie(s: string);
 var i,j,k:integer;
 begin
-  SetLength(mas, length(s)*33+length(s)+(length(s)+1)*33+(length(s)-1));
+  SetLength(mas, length(s)*length(mas_alf)+length(s)+(length(s)+1)*length(mas_alf)+(length(s)-1));
   k:=0;
   for i:=1 to length(s) do        //замена
     begin
-    for j:=0 to 32 do
+    for j:=0 to length(mas_alf)-1 do
       begin
       mas[k]:=StuffString(s, i, 1, mas_alf[j]);
       inc(k);
@@ -93,7 +98,7 @@ begin
 
   for i:=1 to length(s)+1 do        //вставка
     begin
-    for j:=0 to 32 do
+    for j:=0 to length(mas_alf)-1 do
       begin
       mas[k]:=StuffString(s, i, 0, mas_alf[j]);
       inc(k);
@@ -110,6 +115,8 @@ begin
       inc(k);
       end;
 
+for i:=0 to length(mas)-1 do
+Form1.RichEdit1.Lines.Add(mas[i]);
 end;
 
 procedure poisk(s: string; x:integer);
@@ -304,6 +311,7 @@ procedure TForm1.Button3Click(Sender: TObject);
 var COM_Word: olevariant;
     j, l, i: integer;
 begin
+Memo2.Clear;
   try
     if OpenDialog1.Execute then
     begin
@@ -395,6 +403,24 @@ end;
 procedure TForm1.Button4Click(Sender: TObject);
 begin
 Form2.Show;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+var i:integer;
+begin
+Memo2.Clear;
+AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+i:=0;
+while not Eof(sin_file) do
+begin
+  Setlength(sin_mas,i+1);
+  read(sin_file, sin_word);
+  Memo2.Lines.Add(inttostr(sin_word.id)+^I+inttostr(sin_word.parent)+^I+sin_word.txt);
+  inc(i);
+end;
+CloseFile(sin_file);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
