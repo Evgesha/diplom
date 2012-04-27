@@ -121,13 +121,13 @@ Form1.RichEdit1.Lines.Add(mas[i]);
 end;
 
 procedure poisk(s: string; x:integer);
-var j:integer;
+var i:integer;
 begin
-  for j:=0 to length(sin_mas)-1 do     //поиск id родителя по файлу
-    if sin_mas[j].txt=s then begin fl:=sin_mas[j].parent; break; end;
+  for i:=0 to length(sin_mas)-1 do     //поиск id родителя по файлу
+    if sin_mas[i].txt=s then begin fl:=sin_mas[i].parent; break; end;
 
-  for j:=0 to length(sin_mas)-1 do    //поиск родителя
-    if sin_mas[j].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[j].txt;  break; end;
+  for i:=0 to length(sin_mas)-1 do    //поиск родителя
+    if sin_mas[i].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[i].txt;  break; end;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -394,6 +394,8 @@ begin
                 end;
                 end;
 
+if fl=-1 then showmessage('Рубрика не найдена!');
+
 end;
 
 
@@ -408,17 +410,18 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 var i:integer;
+    s: string;
 begin
-sin_word.txt:= InputBox('Добавление новой рубрики', '', '');
+s:= InputBox('Добавление новой рубрики', '', '');
 
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
 Seek(sin_file,0);
 i:=0;
-while not Eof(sin_file) do  inc(i);
+while not Eof(sin_file) do  begin inc(i); read(sin_file, sin_word); end;
 sin_word.id:=i+1;
-sin_word.parent:=0;
-
+sin_word.parent:=56;
+sin_word.txt:=s;
 write(sin_file, sin_word);
 CloseFile(sin_file);
 end;
