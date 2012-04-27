@@ -116,8 +116,10 @@ begin
       inc(k);
       end;
 
+
 for i:=0 to length(mas)-1 do
 Form1.RichEdit1.Lines.Add(mas[i]);
+
 end;
 
 procedure poisk(s: string; x:integer);
@@ -397,10 +399,6 @@ begin
 if fl=-1 then showmessage('Рубрика не найдена!');
 
 end;
-
-
-//showmessage(str_rub+'='+sin_word.txt);
-
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -412,7 +410,7 @@ procedure TForm1.Button5Click(Sender: TObject);
 var i:integer;
     s: string;
 begin
-s:= InputBox('Добавление новой рубрики', '', '');
+{s:= InputBox('Добавление новой рубрики', '', '');
 
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
@@ -423,13 +421,13 @@ sin_word.id:=i+1;
 sin_word.parent:=56;
 sin_word.txt:=s;
 write(sin_file, sin_word);
-CloseFile(sin_file);
+CloseFile(sin_file);     }
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 var i:integer;
 begin
-Memo2.Clear;
+{Memo2.Clear;
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
 Seek(sin_file,0);
@@ -441,7 +439,7 @@ begin
   Memo2.Lines.Add(inttostr(sin_word.id)+^I+inttostr(sin_word.parent)+^I+sin_word.txt);
   inc(i);
 end;
-CloseFile(sin_file);
+CloseFile(sin_file); }
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
