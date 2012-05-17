@@ -26,8 +26,6 @@ object Form1: TForm1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
-      ExplicitLeft = 0
-      ExplicitWidth = 749
       object Label1: TLabel
         Left = 15
         Top = 229
@@ -175,7 +173,6 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'TabSheet2'
       ImageIndex = 1
-      ExplicitWidth = 761
       object Button8: TButton
         Left = 152
         Top = 404
@@ -200,7 +197,6 @@ object Form1: TForm1
         Width = 713
         Height = 348
         TabOrder = 2
-        Silent = False
         DisableCtrlShortcuts = 'N'
         DownloadOptions = [DownloadImages]
         UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]

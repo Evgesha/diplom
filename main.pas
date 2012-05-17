@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, DBAccess, MyAccess, MemDS,
   Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils,
-  Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw_EWB, EwbCore, EmbeddedWB;
+  Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw_EWB, EwbCore, EmbeddedWB, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP;
 
 type
   TForm1 = class(TForm)
@@ -157,31 +158,89 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 var
 a:variant;
+b:variant;
+i: integer;
+j, j_gr: integer;
+
 begin
+//выбор проекта
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-value');
-a.getElementsByTagName('option').item(1).selected := 'true';
-a.click;
-a.getElementsByTagName('option').item(1).selected := 'true';
-Delay(6000);
+for i:=0 to a.length-1 do
+ begin
+ if a.item(i,0).innerText='Fedpress' then
+       begin
+       a.selectedIndex:=i;
+       break;
+       end;
+ end;
+
+//выбор автора
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-author-news-value');
+for i:=0 to a.length-1 do
+ begin
+ if a.item(i,0).innerText='Алексей Остапов' then
+       begin
+       a.selectedIndex:=i;
+       break;
+       end;
+ end;
+
+//выбор формата размещения
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-1354-checkbox');
+a.checked:='checked';
+
+//выбор региона
+a:=EmbeddedWB1.oleobject.document.all.tags('label');
+for i:=0 to a.length-1 do
+ begin
+ //showmessage(a.item(i,0).innerText);
+ if AnsiContainsStr(a.item(i,0).innerText, 'Пермский край')=true then
+       begin
+       //showmessage(a.item(i,0).for);
+       b:=EmbeddedWB1.oleobject.document.getelementbyid(a.item(i,0).htmlFor);
+       b.click;
+       break;
+       end;
+ end;
+
+//выбор рубрики
+  a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
+  b:=EmbeddedWB1.oleobject.document.all.tags('optgroup');
+
+j_gr:=-1;
+for i:=0 to a.length-1 do
+ begin
+ if a.item(i,0).innerText='Аналитика' then
+       begin
+       inc(j_gr);
+       if b.item(j_gr,0).label='Экономика и бизнес' then
+           begin
+           a.selectedIndex:=i;
+           break;
+           end;
+       end;
+ end;
+
+//сохранить новость
+Delay(10000);
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit');
+//a.click;
+
+
+
+
+{
 
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-regions-russia-value-310');
 a.click;
 
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-1354-checkbox');
-a.checked:='checked';
-
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
-a.getElementsByTagName('option').item(5).selected := 'true';
-a.click;
-a.getElementsByTagName('option').item(5).selected := 'true';
 
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-list').click;
-a.value:='D:\Client_site\musor.jpg';
+a.value:='D:\Client_site\musor.jpg'; }
 //a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload');
 //a.click;
-//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit');
-//a.click;
-//Delay(3000);
+
+//
 
 
 //Удмуртия, в ленту, бюджет
