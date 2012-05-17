@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.531,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDB.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.015,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDataSet.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.500,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDataSet.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.468,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLTypes.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.734,=C:\Documents and Settings\Jen\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.796,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDB.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.562,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLEngine.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.687,=D:\Client_site\SQLiteTable3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.734,=C:\Documents and Settings\Jen\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.531,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDB.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.796,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLDB.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.281,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLEngine.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.968,=C:\Documents and Settings\Jen\Мои документы\RAD Studio\9.0\Imports\MOZILLACONTROLLib_TLB.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.640,D:\Client_site\GsvUnicodeRichEdit.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.593,=D:\Client_site\GsvUnicodeRichEdit.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.281,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLEngine.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.359,=D:\Client_site\Unit2.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.015,D:\Client_site\edit.dfm=D:\Client_site\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.687,=D:\Client_site\SQLiteTable3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.468,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLTypes.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.828,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLFunAgr.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.609,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLFunAgr.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.734,D:\Client_site\Client_site.dproj=C:\Documents and Settings\Jen\Мои документы\RAD Studio\Projects\Project1.dproj</Transaction>
@@ -21,11 +22,11 @@
     <Transaction>1899.12.30 00:00:00.000.562,D:\Client_site\main.dfm=C:\Documents and Settings\Jen\Мои документы\RAD Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.656,=D:\Client_site\SQLite3.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.562,D:\Client_site\main.pas=C:\Documents and Settings\Jen\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.000,D:\Client_site\sqlite3.dll=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.187,=D:\Client_site\sqlite3.dll</Transaction>
     <Transaction>1899.12.30 00:00:00.000.906,=D:\Client_site\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.734,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLTypes.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.359,D:\Программы и Игры\delphiunicoderichedit\delphiunicoderichedit\GsvUnicodeRichEdit.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.734,=D:\Программы и Игры\delphiunicoderichedit\delphiunicoderichedit\GsvUnicodeRichEdit.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.187,=D:\Client_site\sqlite3.dll</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.000,D:\Client_site\sqlite3.dll=</Transaction>
   </Transactions>
 </BorlandProject>

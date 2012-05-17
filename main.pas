@@ -6,41 +6,46 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, DBAccess, MyAccess, MemDS,
   Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw_EWB, EwbCore, EmbeddedWB;
 
 type
   TForm1 = class(TForm)
-    MyConnection1: TMyConnection;
-    Edit1: TEdit;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    EmbeddedWB1: TEmbeddedWB;
+    Button8: TButton;
+    Button9: TButton;
     Label1: TLabel;
-    Memo1: TMemo;
     Label2: TLabel;
-    Edit2: TEdit;
     Label3: TLabel;
+    Label4: TLabel;
+    Image1: TImage;
+    Edit1: TEdit;
+    Memo1: TMemo;
+    Edit2: TEdit;
     Button1: TButton;
-    MyQuery1: TMyQuery;
-    MyTable1: TMyTable;
-    OpenDialog1: TOpenDialog;
     RichEdit1: TRichEdit;
     Button2: TButton;
     Button3: TButton;
     ListBox1: TListBox;
-    Label4: TLabel;
     Memo2: TMemo;
     Button4: TButton;
-    MyDataSource1: TMyDataSource;
-    Image1: TImage;
     Button5: TButton;
     Button6: TButton;
+    OpenDialog1: TOpenDialog;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure ListBox1DblClick(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button9Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     //procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -64,7 +69,6 @@ var
   str: string; //рабочая строка
   str_rub: string; //строка с рубриками
   fl: integer; //флаг выхода из цикла обработки рубрик
-  //i, j, k, l: integer; //счетчики для циклов
   lg: integer; //длина строки
   mas_alf: array [0..33] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',' ');
   mas: array of string;    //массив расширенной выборки
@@ -132,8 +136,54 @@ begin
     if sin_mas[i].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[i].txt;  break; end;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure Delay(Value: Cardinal);
+var
+  F, N: Cardinal;
 begin
+  N := 0;
+  while N <= (Value div 10) do
+  begin
+    SleepEx(1, True);
+    Application.ProcessMessages;
+    Inc(N);
+  end;
+  F := GetTickCount;
+  repeat
+    Application.ProcessMessages;
+    N := GetTickCount;
+  until (N - F >= (Value mod 10)) or (N < F);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+a:variant;
+begin
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-value');
+a.getElementsByTagName('option').item(1).selected := 'true';
+a.click;
+a.getElementsByTagName('option').item(1).selected := 'true';
+Delay(6000);
+
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-regions-russia-value-310');
+a.click;
+
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-1354-checkbox');
+a.checked:='checked';
+
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
+a.getElementsByTagName('option').item(5).selected := 'true';
+a.click;
+a.getElementsByTagName('option').item(5).selected := 'true';
+
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-list').click;
+a.value:='D:\Client_site\musor.jpg';
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload');
+//a.click;
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit');
+//a.click;
+//Delay(3000);
+
+
 //Удмуртия, в ленту, бюджет
 //добавить в файл
 
@@ -148,6 +198,10 @@ write(sin_file, sin_word);
 CloseFile(sin_file);
 }
 
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
 {
 
 function DelDat(c:integer):integer;
@@ -301,15 +355,6 @@ end;
 
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
-begin
-//добавление в таблицу
-{
-MyQuery1.Connection := MyConnection1;
-MyQuery1.SQL.Text := 'INSERT INTO node_revision VALUES ("","","1","пробник","","","1","2","1","0")';
-MyQuery1.Execute;     }
-end;
-
 procedure TForm1.Button3Click(Sender: TObject);
 var COM_Word: olevariant;
     j, l, i: integer;
@@ -410,7 +455,7 @@ procedure TForm1.Button5Click(Sender: TObject);
 var i:integer;
     s: string;
 begin
-{s:= InputBox('Добавление новой рубрики', '', '');
+s:= InputBox('Добавление новой рубрики', '', '');
 
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
@@ -421,13 +466,13 @@ sin_word.id:=i+1;
 sin_word.parent:=56;
 sin_word.txt:=s;
 write(sin_file, sin_word);
-CloseFile(sin_file);     }
+CloseFile(sin_file);
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 var i:integer;
 begin
-{Memo2.Clear;
+Memo2.Clear;
 AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
 Seek(sin_file,0);
@@ -439,7 +484,32 @@ begin
   Memo2.Lines.Add(inttostr(sin_word.id)+^I+inttostr(sin_word.parent)+^I+sin_word.txt);
   inc(i);
 end;
-CloseFile(sin_file); }
+CloseFile(sin_file);
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+EmbeddedWB1.Navigate('http://fedpress.ru/');
+end;
+
+procedure TForm1.Button9Click(Sender: TObject);
+var
+a:variant;
+begin
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-name-2');
+//a.value:='Evgesha';
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-pass-2');
+//a.value:='ofccgj.';
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit-10');
+//a.click;
+//Delay(5000);
+EmbeddedWB1.Navigate('http://fedpress.ru/node/add/news');
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+//EmbeddedWB1.Navigate('http://fedpress.ru/logout/');
+Delay(3000);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -464,5 +534,6 @@ begin
 Form2.Edit1.Text:=ListBox1.Items[ListBox1.ItemIndex];
 Form2.Show;
 end;
+
 
 end.

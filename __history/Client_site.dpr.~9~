@@ -1,0 +1,17 @@
+program Client_site;
+
+uses
+  Vcl.Forms,
+  main in 'main.pas' {Form1},
+  edit in 'edit.pas' {Form2},
+  MOZILLACONTROLLib_TLB in 'C:\Documents and Settings\Jen\Мои документы\RAD Studio\9.0\Imports\MOZILLACONTROLLib_TLB.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
+  Application.Run;
+end.
