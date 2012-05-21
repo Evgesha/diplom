@@ -47,7 +47,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button9Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    //procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,9 +70,10 @@ var
   str_rub: string; //строка с рубриками
   fl: integer; //флаг выхода из цикла обработки рубрик
   lg: integer; //длина строки
+  id_rubr:integer; //id рубрики в листбоксе
   mas_alf: array [0..33] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',' ');
   mas: array of string;    //массив расширенной выборки
-  a, b: string;    //рабочие переменные
+  a, b, e: string;    //рабочие переменные
 
 implementation
 
@@ -120,21 +120,23 @@ begin
       mas[k]:=b;
       inc(k);
       end;
-
-
-for i:=0 to length(mas)-1 do
-Form1.RichEdit1.Lines.Add(mas[i]);
-
 end;
 
 procedure poisk(s: string; x:integer);
 var i:integer;
 begin
   for i:=0 to length(sin_mas)-1 do     //поиск id родителя по файлу
-    if sin_mas[i].txt=s then begin fl:=sin_mas[i].parent; break; end;
-
+    begin
+    e:=AnsiLowerCase(sin_mas[i].txt);
+    if e=s then
+      begin
+      if sin_mas[i].parent=0 then fl:=sin_mas[i].id
+         else fl:=sin_mas[i].parent;
+      break;
+      end;
+    end;
   for i:=0 to length(sin_mas)-1 do    //поиск родителя
-    if sin_mas[i].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[i].txt;  break; end;
+    if sin_mas[i].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[i].txt; break; end;
 end;
 
 procedure Delay(Value: Cardinal);
@@ -226,36 +228,15 @@ Delay(10000);
 //a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit');
 //a.click;
 
-
-
-
 {
 
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-regions-russia-value-310');
 a.click;
 
-
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-list').click;
 a.value:='D:\Client_site\musor.jpg'; }
 //a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload');
 //a.click;
-
-//
-
-
-//Удмуртия, в ленту, бюджет
-//добавить в файл
-
-{sin_word.id:=12;
-sin_word.parent:=9;
-sin_word.txt:='буджет';
-
-AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat');
-Reset(sin_file);
-Seek(sin_file,FileSize(sin_file));  //переход на конец файла
-write(sin_file, sin_word);
-CloseFile(sin_file);
-}
 
 end;
 
@@ -419,6 +400,11 @@ var COM_Word: olevariant;
     j, l, i: integer;
 begin
 Memo2.Clear;
+ListBox1.Clear;
+RichEdit1.Clear;
+Edit1.Clear;
+Memo1.Clear;
+Edit2.Clear;
   try
     if OpenDialog1.Execute then
     begin
@@ -436,7 +422,66 @@ Memo2.Clear;
     COM_Word := UnAssigned;
   end;
 
+//begin заглушка
 str:=Memo2.Lines.Text;
+str_rub:=Copy(str,1,AnsiPos('[',str)-1);  //копируем все до зага  (рубрики, подписи, ссылки)
+RichEdit1.Lines.Add(str_rub);
+
+Delete(str_rub,AnsiPos(#13,str_rub)+1,length(str_rub)-1);
+Repeat     //разделяем слова по запятым.
+ begin
+  a:=Copy(str_rub,1,AnsiPos(',',str_rub)-1);
+  a:=Trim(a);
+  a:=AnsiLowerCase(a);
+  ListBox1.Items.Add(a);
+  Delete(str_rub,1,AnsiPos(',',str_rub));
+  if AnsiPos(',',str_rub)=0 then
+      begin
+      a:=Copy(str_rub,1,AnsiPos(#13,str_rub)-1);
+      a:=Trim(a);
+      a:=AnsiLowerCase(a);
+      ListBox1.Items.Add(a);
+      end;
+ end;
+until AnsiPos(',',str_rub)=0;
+{memo2.Clear;
+a:=Copy(str_rub,1,AnsiPos('лента',str_rub)-1);
+Delete(str_rub,1,AnsiPos('лента',str_rub));
+for i:=1 to length(str_rub) do
+  memo2.Lines.Add(str_rub[i]+'  '+inttostr(ord(str_rub[i])));  }
+
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+i:=0;
+while not Eof(sin_file) do
+begin
+  Setlength(sin_mas,i+1);
+  read(sin_file, sin_word);
+  sin_mas[i]:=sin_word;
+  inc(i);
+end;
+CloseFile(sin_file);      //закрыли файл, дальше работаем с массивом
+
+for l:=0 to ListBox1.Count-1 do
+begin
+  fl:=-1;
+  poisk(ListBox1.Items[l], l);
+  if fl=-1 then begin
+                racshirenie(ListBox1.Items[l]);
+                for j:=0 to length(mas)-1 do
+                begin
+                  poisk(mas[j], l);
+                  if fl<>-1 then break;
+                end;
+                end;
+
+if fl=-1 then showmessage('Не найдена рубрика '+ListBox1.Items[l]);
+
+end;
+//end заглушка
+
+{str:=Memo2.Lines.Text;
 str_rub:=Copy(str,1,AnsiPos('[',str)-1);  //копируем все до зага  (рубрики, подписи, ссылки)
 
 Delete(str,1,AnsiPos('[',str));  //удаляем все до зага
@@ -446,6 +491,7 @@ Delete(str,1,AnsiPos('[',str)); //удаляем заг
 Memo1.Lines.Text:=Copy(str,1,AnsiPos(']',str)-1); //копируем тело
 
 Delete(str,1,AnsiPos('[',str)); //удаляем тело
+
 str:=Copy(str,1,AnsiPos(']',str)-1);  //копируем тэги
 lg:=length(str);                          // на случай
 for i:=1 to lg do                         // если тэги
@@ -456,7 +502,7 @@ for i:=1 to lg do                         // если тэги
 Edit2.Text:=str;
 
 
-Repeat     //разделяем слова по запятым. Точка - конец строки с рубриками
+Repeat     //разделяем слова по запятым.
  begin
   a:=Copy(str_rub,1,AnsiPos(',',str_rub)-1);
   a:=Trim(a);
@@ -465,7 +511,7 @@ Repeat     //разделяем слова по запятым. Точка - конец строки с рубриками
   Delete(str_rub,1,AnsiPos(',',str_rub));
   if AnsiPos(',',str_rub)=0 then
       begin
-      a:=Copy(str_rub,1,AnsiPos('.',str_rub)-1);
+      a:=Copy(str_rub,1,AnsiPos(#13,str_rub)-1);
       a:=Trim(a);
       a:=AnsiLowerCase(a);
       ListBox1.Items.Add(a);
@@ -474,7 +520,7 @@ Repeat     //разделяем слова по запятым. Точка - конец строки с рубриками
 until AnsiPos(',',str_rub)=0;
 
 
-AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
 Seek(sin_file,0);
 i:=0;
@@ -502,7 +548,7 @@ begin
 
 if fl=-1 then showmessage('Рубрика не найдена!');
 
-end;
+end;   }
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -516,13 +562,13 @@ var i:integer;
 begin
 s:= InputBox('Добавление новой рубрики', '', '');
 
-AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
 Seek(sin_file,0);
 i:=0;
 while not Eof(sin_file) do  begin inc(i); read(sin_file, sin_word); end;
 sin_word.id:=i+1;
-sin_word.parent:=56;
+sin_word.parent:=0;
 sin_word.txt:=s;
 write(sin_file, sin_word);
 CloseFile(sin_file);
@@ -532,7 +578,7 @@ procedure TForm1.Button6Click(Sender: TObject);
 var i:integer;
 begin
 Memo2.Clear;
-AssignFile(sin_file,GetCurrentDir+'\Sinonims.dat'); //подключаемся к файлу
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
 Seek(sin_file,0);
 i:=0;
@@ -575,9 +621,9 @@ procedure TForm1.FormCreate(Sender: TObject);
 var i:integer;
 begin
 //s:=GetCurrentDir;  //установелние текущего каталога
-if FileExists('Sinonims.dat')=false then  //проверка наличия файла
+if FileExists('D:\Client_site\Sinonims.dat')=false then  //проверка наличия файла
   begin
-    i:=FileCreate('Sinonims.dat');    //если нету то создать
+    i:=FileCreate('D:\Client_site\Sinonims.dat');    //если нету то создать
     FileClose(i);              //и закрыть чтоб ошибок небыло
   end;
 end;
@@ -590,6 +636,7 @@ end;
 procedure TForm1.ListBox1DblClick(Sender: TObject);
 begin
 //по двойному клику вызвать привязку
+id_rubr:=ListBox1.ItemIndex;
 Form2.Edit1.Text:=ListBox1.Items[ListBox1.ItemIndex];
 Form2.Show;
 end;
