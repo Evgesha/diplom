@@ -1,0 +1,1 @@
+document.write('\x3c!-- No active ads were found in t22360 --\x3e');

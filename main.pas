@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, DBAccess, MyAccess, MemDS,
   Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils,
   Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw_EWB, EwbCore, EmbeddedWB, IdBaseComponent,
-  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP;
+  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, Vcl.DBCtrls,
+  IWVCLBaseControl, IWBaseControl, IWBaseHTMLControl, IWControl, IWDBStdCtrls;
 
 type
   TForm1 = class(TForm)
@@ -24,9 +25,7 @@ type
     Image1: TImage;
     Edit1: TEdit;
     Memo1: TMemo;
-    Edit2: TEdit;
     Button1: TButton;
-    RichEdit1: TRichEdit;
     Button2: TButton;
     Button3: TButton;
     ListBox1: TListBox;
@@ -35,6 +34,19 @@ type
     Button5: TButton;
     Button6: TButton;
     OpenDialog1: TOpenDialog;
+    Panel1: TPanel;
+    TabSheet3: TTabSheet;
+    EmbeddedWB2: TEmbeddedWB;
+    DBNavigator1: TDBNavigator;
+    Edit3: TEdit;
+    Memo3: TMemo;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -47,6 +59,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button9Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -188,25 +202,66 @@ for i:=0 to a.length-1 do
  end;
 
 //выбор формата размещения
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-1354-checkbox');
-a.checked:='checked';
+for j:=0 to ListBox1.Count-1 do
+begin
+ if ListBox1.Items[j]='Актуальные сюжеты' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-16-checkbox');
+      a.checked:='checked';
+      end;
+  if ListBox1.Items[j]='В ленту' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-17-checkbox');
+      a.checked:='checked';
+      end;
+  if ListBox1.Items[j]='Тема дня (Fedpress)' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-1354-checkbox');
+      a.checked:='checked';
+      end;
+  if ListBox1.Items[j]='Главная новость' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-18-checkbox');
+      a.checked:='checked';
+      end;
+  if ListBox1.Items[j]='Тема дня (World News)' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-614-checkbox');
+      a.checked:='checked';
+      end;
+  if ListBox1.Items[j]='Отображать на сайте' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-19-checkbox');
+      a.checked:='checked';
+      end;
+  if ListBox1.Items[j]='Разрешить коментарии' then
+      begin
+      a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-format-postion-news-value-20-checkbox');
+      a.checked:='checked';
+      end;
+end;
 
 //выбор региона
 a:=EmbeddedWB1.oleobject.document.all.tags('label');
+for j:=0 to ListBox1.Count-1 do
+begin
 for i:=0 to a.length-1 do
  begin
- //showmessage(a.item(i,0).innerText);
- if AnsiContainsStr(a.item(i,0).innerText, 'Пермский край')=true then
+ if AnsiContainsStr(a.item(i,0).innerText,ListBox1.Items[j])=true then
        begin
-       //showmessage(a.item(i,0).for);
+       try
        b:=EmbeddedWB1.oleobject.document.getelementbyid(a.item(i,0).htmlFor);
        b.click;
+       except
+
+       end;
        break;
        end;
  end;
+end;
 
 //выбор рубрики
-  a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
+{  a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
   b:=EmbeddedWB1.oleobject.document.all.tags('optgroup');
 
 j_gr:=-1;
@@ -221,23 +276,37 @@ for i:=0 to a.length-1 do
            break;
            end;
        end;
- end;
+ end; }
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
+for j:=0 to ListBox1.Count-1 do
+begin
+  for i:=0 to a.length-1 do
+    begin
+      if a.item(i,0).innerText=ListBox1.Items[j] then begin  a.selectedIndex:=i; break; end;
+    end;
+end;
 
+
+//Заголовок
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-title');
+a.value:=Edit1.Text;
+
+//Тело
+//EmbeddedWB2.Navigate('http://fedpress.ru/sites/all/libraries/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm?S');
+//!!!!!EmbeddedWB2.ExecScript('http://fedpress.ru/sites/all/libraries/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm','JavaScript');
+//!!!!!http://fedpress.ru/sites/all/libraries/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm?S
+a:=EmbeddedWB2.oleobject.document.getelementbyid('edit-body');
+a:=Memo1.Text;
+
+//Теги
+a:=EmbeddedWB1.oleobject.document.getelementbyid('field_tags_news[value]');
+a.value:=Memo3.Lines.Text;
+
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload').click;
 //сохранить новость
-Delay(10000);
+//Delay(10000);
 //a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit');
 //a.click;
-
-{
-
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-regions-russia-value-310');
-a.click;
-
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-list').click;
-a.value:='D:\Client_site\musor.jpg'; }
-//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload');
-//a.click;
-
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -399,16 +468,15 @@ procedure TForm1.Button3Click(Sender: TObject);
 var COM_Word: olevariant;
     j, l, i: integer;
 begin
-Memo2.Clear;
-ListBox1.Clear;
-RichEdit1.Clear;
-Edit1.Clear;
-Memo1.Clear;
-Edit2.Clear;
   try
     if OpenDialog1.Execute then
     begin
-    Caption := ExtractFileName(OpenDialog1.FileName);
+    Memo2.Clear;
+    ListBox1.Clear;
+    Edit1.Clear;
+    Memo1.Clear;
+    Memo3.Clear;
+    Edit3.Text:=OpenDialog1.FileName;
     COM_Word := CreateOLEObject('Word.Application');
     COM_Word.Visible := False;
     COM_Word.Documents.Open(OpenDialog1.FileName);
@@ -417,12 +485,8 @@ Edit2.Clear;
     Memo2.PasteFromClipboard;
     COM_Word.DisplayAlerts := False;
     COM_Word.Quit;
-    end;
-  finally
-    COM_Word := UnAssigned;
-  end;
 
-//begin заглушка
+{//begin заглушка
 str:=Memo2.Lines.Text;
 str_rub:=Copy(str,1,AnsiPos('[',str)-1);  //копируем все до зага  (рубрики, подписи, ссылки)
 RichEdit1.Lines.Add(str_rub);
@@ -444,11 +508,6 @@ Repeat     //разделяем слова по запятым.
       end;
  end;
 until AnsiPos(',',str_rub)=0;
-{memo2.Clear;
-a:=Copy(str_rub,1,AnsiPos('лента',str_rub)-1);
-Delete(str_rub,1,AnsiPos('лента',str_rub));
-for i:=1 to length(str_rub) do
-  memo2.Lines.Add(str_rub[i]+'  '+inttostr(ord(str_rub[i])));  }
 
 AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
 Reset(sin_file);
@@ -479,9 +538,9 @@ begin
 if fl=-1 then showmessage('Не найдена рубрика '+ListBox1.Items[l]);
 
 end;
-//end заглушка
+//end заглушка   }
 
-{str:=Memo2.Lines.Text;
+str:=Memo2.Lines.Text;
 str_rub:=Copy(str,1,AnsiPos('[',str)-1);  //копируем все до зага  (рубрики, подписи, ссылки)
 
 Delete(str,1,AnsiPos('[',str));  //удаляем все до зага
@@ -499,10 +558,10 @@ for i:=1 to lg do                         // если тэги
   if str[i]=#13 then str[i]:=' ';         // по старинке
   if str[i]=#10 then str[i]:=' ';         // в столбик
   end;
-Edit2.Text:=str;
+Memo3.Lines.Text:=str;
 
 
-Repeat     //разделяем слова по запятым.
+Repeat     //разделяем рубрики по запятым
  begin
   a:=Copy(str_rub,1,AnsiPos(',',str_rub)-1);
   a:=Trim(a);
@@ -546,9 +605,13 @@ begin
                 end;
                 end;
 
-if fl=-1 then showmessage('Рубрика не найдена!');
+if fl=-1 then showmessage('Не найдена рубрика '+ListBox1.Items[l]);
 
-end;   }
+end;
+    end;
+  finally
+    COM_Word := UnAssigned;
+  end;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -611,6 +674,13 @@ begin
 EmbeddedWB1.Navigate('http://fedpress.ru/node/add/news');
 end;
 
+procedure TForm1.FormActivate(Sender: TObject);
+begin
+//EmbeddedWB1.Navigate('D:\Client_site\news.htm');
+//EmbeddedWB1.Navigate('http://fedpress.ru/node/add/news');
+
+end;
+
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 //EmbeddedWB1.Navigate('http://fedpress.ru/logout/');
@@ -631,6 +701,14 @@ end;
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
 //sldb.Free;
+end;
+
+procedure TForm1.Image1Click(Sender: TObject);
+var a:variant;
+begin
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-upload').click;
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-upload');
+Image1.Picture.LoadFromFile(vartostr(a.value));
 end;
 
 procedure TForm1.ListBox1DblClick(Sender: TObject);

@@ -1,0 +1,257 @@
+object Form1: TForm1
+  AlignWithMargins = True
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 508
+  ClientWidth = 746
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 1
+    Width = 761
+    Height = 520
+    ActivePage = TabSheet2
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      object Label1: TLabel
+        Left = 15
+        Top = 128
+        Width = 53
+        Height = 13
+        Caption = #1047#1072#1075#1086#1083#1086#1074#1086#1082
+      end
+      object Label2: TLabel
+        Left = 15
+        Top = 187
+        Width = 24
+        Height = 13
+        Caption = #1058#1077#1083#1086
+      end
+      object Label3: TLabel
+        Left = 248
+        Top = 13
+        Width = 22
+        Height = 13
+        Caption = #1058#1101#1075#1080
+      end
+      object Label4: TLabel
+        Left = 15
+        Top = 13
+        Width = 42
+        Height = 13
+        Caption = #1056#1091#1073#1088#1080#1082#1080
+      end
+      object Edit1: TEdit
+        Left = 15
+        Top = 147
+        Width = 458
+        Height = 21
+        TabOrder = 0
+      end
+      object Memo1: TMemo
+        Left = 15
+        Top = 206
+        Width = 458
+        Height = 193
+        ScrollBars = ssVertical
+        TabOrder = 1
+      end
+      object Edit2: TEdit
+        Left = 248
+        Top = 32
+        Width = 225
+        Height = 90
+        AutoSize = False
+        TabOrder = 2
+      end
+      object Button1: TButton
+        Left = 483
+        Top = 443
+        Width = 75
+        Height = 25
+        Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1100
+        TabOrder = 3
+        OnClick = Button1Click
+      end
+      object Button2: TButton
+        Left = 564
+        Top = 443
+        Width = 75
+        Height = 25
+        Caption = 'Button2'
+        TabOrder = 4
+        OnClick = Button2Click
+      end
+      object Button3: TButton
+        Left = 645
+        Top = 443
+        Width = 75
+        Height = 25
+        Caption = 'Button3'
+        TabOrder = 5
+        OnClick = Button3Click
+      end
+      object ListBox1: TListBox
+        Left = 15
+        Top = 32
+        Width = 218
+        Height = 90
+        ItemHeight = 13
+        TabOrder = 6
+        OnDblClick = ListBox1DblClick
+      end
+      object Memo2: TMemo
+        Left = 496
+        Top = 206
+        Width = 224
+        Height = 193
+        ScrollBars = ssVertical
+        TabOrder = 7
+      end
+      object Button4: TButton
+        Left = 3
+        Top = 443
+        Width = 75
+        Height = 25
+        Caption = #1056#1077#1076#1072#1082#1090#1086#1088
+        TabOrder = 8
+        OnClick = Button4Click
+      end
+      object Button5: TButton
+        Left = 84
+        Top = 443
+        Width = 131
+        Height = 25
+        Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1088#1091#1073#1088#1080#1082#1091
+        TabOrder = 9
+        OnClick = Button5Click
+      end
+      object Button6: TButton
+        Left = 221
+        Top = 443
+        Width = 131
+        Height = 25
+        Caption = #1042#1099#1074#1077#1089#1090#1080' sin-'#1092#1072#1081#1083
+        TabOrder = 10
+        OnClick = Button6Click
+      end
+      object Panel1: TPanel
+        Left = 496
+        Top = 32
+        Width = 226
+        Height = 156
+        BiDiMode = bdLeftToRight
+        BorderWidth = 1
+        BorderStyle = bsSingle
+        Caption = #1065#1077#1083#1082#1085#1080#1090#1077', '#1095#1090#1086#1073#1099' '#1076#1086#1073#1072#1074#1080#1090#1100' '#1080#1079#1086#1073#1088#1072#1078#1077#1085#1080#1077
+        ParentBiDiMode = False
+        TabOrder = 11
+        object Image1: TImage
+          Left = 2
+          Top = 2
+          Width = 218
+          Height = 148
+          Cursor = crHandPoint
+          Hint = #1065#1077#1083#1082#1085#1080#1090#1077', '#1095#1090#1086#1073#1099' '#1076#1086#1073#1072#1074#1080#1090#1100' '#1080#1079#1086#1073#1088#1072#1078#1077#1085#1080#1077
+          Align = alClient
+          AutoSize = True
+          DragCursor = crHandPoint
+          IncrementalDisplay = True
+          ParentShowHint = False
+          ShowHint = True
+          Stretch = True
+          Transparent = True
+          OnClick = Image1Click
+          ExplicitLeft = 1
+          ExplicitTop = 1
+          ExplicitWidth = 224
+          ExplicitHeight = 154
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ImageIndex = 1
+      object Button8: TButton
+        Left = 152
+        Top = 404
+        Width = 75
+        Height = 25
+        Caption = #1053#1072' '#1089#1072#1081#1090
+        TabOrder = 0
+        OnClick = Button8Click
+      end
+      object Button9: TButton
+        Left = 432
+        Top = 404
+        Width = 99
+        Height = 25
+        Caption = #1047#1072#1083#1086#1075#1080#1085#1080#1090#1100#1089#1103
+        TabOrder = 1
+        OnClick = Button9Click
+      end
+      object EmbeddedWB1: TEmbeddedWB
+        Left = 3
+        Top = 3
+        Width = 713
+        Height = 348
+        TabOrder = 2
+        DisableCtrlShortcuts = 'N'
+        DownloadOptions = []
+        UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]
+        About = ' EmbeddedWB http://bsalsa.com/'
+        PrintOptions.HTMLHeader.Strings = (
+          '<HTML></HTML>')
+        PrintOptions.Orientation = poPortrait
+        ControlData = {
+          4C000000B1490000F82300000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'TabSheet3'
+      ImageIndex = 2
+      object EmbeddedWB2: TEmbeddedWB
+        Left = 40
+        Top = 32
+        Width = 649
+        Height = 337
+        TabOrder = 0
+        Silent = False
+        DisableCtrlShortcuts = 'N'
+        UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]
+        About = ' EmbeddedWB http://bsalsa.com/'
+        PrintOptions.HTMLHeader.Strings = (
+          '<HTML></HTML>')
+        PrintOptions.Orientation = poPortrait
+        ControlData = {
+          4C00000013430000D42200000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 160
+    Top = 65528
+  end
+end

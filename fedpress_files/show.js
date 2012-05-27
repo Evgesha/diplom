@@ -1,0 +1,2 @@
+__nnn_d = document.getElementById('DIV_NNN_2765');
+if(__nnn_d) { document.write('<script charset="windows-1251" type="text/javascript" src="http://nnn.novoteka.ru/show.cgi?adp=2765&div=DIV_NNN_2765&nnn=2765&t='+Math.random()+'"></script>');} 

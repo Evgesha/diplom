@@ -1,0 +1,1 @@
+document.write('\x3cdiv class=\"image-advertisement\" id=\"ad-12884\"\x3e\x3ca href=\"http://fedpress.ru/ad/redirect/12884/t22707?url=node\" onclick=\"window.open(this.href); return false;\"\x3e\x3cimg src=\"http://fedpress.ru/sites/fedpress/files/mvd.gif\" alt=\"\" title=\"\" width=\"255\" height=\"54\" /\x3e\x3c/a\x3e\x3c/div\x3e');
