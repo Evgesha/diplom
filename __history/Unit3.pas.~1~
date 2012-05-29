@@ -1,0 +1,65 @@
+unit auto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm3 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+  a:variant;
+
+
+
+implementation
+
+{$R *.dfm}
+
+uses  main;
+
+procedure TForm3.Button1Click(Sender: TObject);
+var vl:integer;
+begin
+vl:=0;
+  repeat
+    try
+    Form1.Delay(5000);
+    Form1.Show;
+    a:=Form1.EmbeddedWB1.oleobject.document.getelementbyid('edit-name-2');
+    a.value:=Edit1.Text;
+    a:=Form1.EmbeddedWB1.oleobject.document.getelementbyid('edit-pass-2');
+    a.value:=Edit2.Text;
+    a:=Form1.EmbeddedWB1.oleobject.document.getelementbyid('edit-submit-10');
+    //a.click;
+    vl:=1;
+    finally
+
+    end;
+  until vl=0;
+Form1.Delay(5000);
+Form1.Show;
+Form3.Hide;
+end;
+
+procedure TForm3.FormShow(Sender: TObject);
+begin
+Form1.EmbeddedWB1.Navigate('http://fedpress.ru/');
+end;
+
+end.

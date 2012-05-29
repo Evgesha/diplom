@@ -8,16 +8,13 @@ uses
   Vcl.StdCtrls, Datasnap.DBClient, SimpleDS, Vcl.ComCtrls, ComObj, Vcl.Menus, StrUtils,
   Vcl.ExtCtrls, Vcl.OleCtrls, SHDocVw_EWB, EwbCore, EmbeddedWB, IdBaseComponent,
   IdComponent, IdTCPConnection, IdTCPClient, IdHTTP, Vcl.DBCtrls,
-  IWVCLBaseControl, IWBaseControl, IWBaseHTMLControl, IWControl, IWDBStdCtrls;
+  IWVCLBaseControl, IWBaseControl, IWBaseHTMLControl, IWControl, IWDBStdCtrls, mshtml,
+  Vcl.Buttons;
 
 type
   TForm1 = class(TForm)
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
-    EmbeddedWB1: TEmbeddedWB;
-    Button8: TButton;
-    Button9: TButton;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -36,31 +33,38 @@ type
     OpenDialog1: TOpenDialog;
     Panel1: TPanel;
     TabSheet3: TTabSheet;
-    EmbeddedWB2: TEmbeddedWB;
-    DBNavigator1: TDBNavigator;
     Edit3: TEdit;
     Memo3: TMemo;
     Label5: TLabel;
     Label6: TLabel;
-    Label7: TLabel;
     MainMenu1: TMainMenu;
     N1: TMenuItem;
     N2: TMenuItem;
     N3: TMenuItem;
+    TreeView1: TTreeView;
+    ListBox2: TListBox;
+    BitBtn1: TBitBtn;
+    Button7: TButton;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    EmbeddedWB1: TEmbeddedWB;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure ListBox1DblClick(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Button9Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
     procedure Image1Click(Sender: TObject);
+    procedure TabSheet3Show(Sender: TObject);
+    procedure TreeView1Change(Sender: TObject; Node: TTreeNode);
+    procedure Button7Click(Sender: TObject);
+    procedure Delay(Value: Cardinal);
+    procedure FormShow(Sender: TObject);
+    procedure N3Click(Sender: TObject);
+    procedure N5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,6 +78,15 @@ type
     txt: string[50];
 end;
 
+TNewThread = class(TThread)
+  private
+    { Private declarations }
+    procedure logout;
+    procedure addnews;
+    procedure fedpress;
+  protected
+
+  end;
 
 var
   Form1: TForm1;
@@ -88,12 +101,28 @@ var
   mas_alf: array [0..33] of string=('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',' ');
   mas: array of string;    //массив расширенной выборки
   a, b, e: string;    //рабочие переменные
+  NewThread: TNewThread; //потоковая переменная
 
 implementation
 
 {$R *.dfm}
 
-uses edit;
+uses edit, Unit3;
+
+
+procedure TNewThread.logout;
+begin
+Form1.EmbeddedWB1.Navigate('http://fedpress.ru/logout/');
+end;
+procedure TNewThread.addnews;
+begin
+Form1.EmbeddedWB1.Navigate('http://fedpress.ru/node/add/news');
+end;
+
+procedure TNewThread.fedpress;
+begin
+  Form1.EmbeddedWB1.Navigate('http://fedpress.ru/');
+end;
 
 procedure racshirenie(s: string);
 var i,j,k:integer;
@@ -153,7 +182,7 @@ begin
     if sin_mas[i].id=fl then begin Form1.ListBox1.Items[x]:=sin_mas[i].txt; break; end;
 end;
 
-procedure Delay(Value: Cardinal);
+procedure TForm1.Delay(Value: Cardinal);
 var
   F, N: Cardinal;
 begin
@@ -241,11 +270,12 @@ begin
       end;
 end;
 
+a:=EmbeddedWB1.oleobject.document.all.tags('label');
 //выбор региона
 a:=EmbeddedWB1.oleobject.document.all.tags('label');
 for j:=0 to ListBox1.Count-1 do
 begin
-for i:=0 to a.length-1 do
+for i:=0 to 130 do
  begin
  if AnsiContainsStr(a.item(i,0).innerText,ListBox1.Items[j])=true then
        begin
@@ -253,7 +283,6 @@ for i:=0 to a.length-1 do
        b:=EmbeddedWB1.oleobject.document.getelementbyid(a.item(i,0).htmlFor);
        b.click;
        except
-
        end;
        break;
        end;
@@ -276,37 +305,61 @@ for i:=0 to a.length-1 do
            break;
            end;
        end;
- end; }
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-project-news-fedpress-value');
+ end;   }
+
+a:=EmbeddedWB1.oleobject.document.all.tags('select');
 for j:=0 to ListBox1.Count-1 do
 begin
   for i:=0 to a.length-1 do
     begin
-      if a.item(i,0).innerText=ListBox1.Items[j] then begin  a.selectedIndex:=i; break; end;
+      if a.item(i,0).innerText=ListBox1.Items[j] then begin  a.selectedIndex:=i; a.click; break; end;
     end;
 end;
-
 
 //Заголовок
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-title');
 a.value:=Edit1.Text;
 
+//Аннотация
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-anons-news-0-value');
+b:=copy(Memo1.Lines.Text,1,AnsiPos(#13,Memo1.Lines.Text));
+if Length(b)>500 then begin b:=copy(b,1,500); b:=copy(b,1,LastDelimiter('.', b)); end;
+a.value:=b;
+
 //Тело
 //EmbeddedWB2.Navigate('http://fedpress.ru/sites/all/libraries/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm?S');
 //!!!!!EmbeddedWB2.ExecScript('http://fedpress.ru/sites/all/libraries/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm','JavaScript');
 //!!!!!http://fedpress.ru/sites/all/libraries/tinymce/jscripts/tiny_mce/plugins/paste/pasteword.htm?S
-a:=EmbeddedWB2.oleobject.document.getelementbyid('edit-body');
-a:=Memo1.Text;
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-body_code').click;
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('htmlSource');
+//Sleep(20000);
+//a.value:=Memo1.Text;
+//Sleep(10000);
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('insert').click;
+//EmbeddedWB1.oleobject.document.getelementbyid('edit-body_pastetext').click;
+
+//EmbeddedWB1.oleobject.document.getelementbyid('edit-body').click;
+//a.value:=Memo1.Text;
 
 //Теги
 a:=EmbeddedWB1.oleobject.document.getelementbyid('field_tags_news[value]');
 a.value:=Memo3.Lines.Text;
-
+Delay(10000);
 //a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload').click;
 //сохранить новость
 //Delay(10000);
-//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit');
-//a.click;
+a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-filefield-upload').click;
+//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit').click;
+Showmessage('Новость успешно сохранена');
+Edit3.Clear;
+ListBox1.Clear;
+Memo3.Clear;
+Edit1.Clear;
+Memo1.Clear;
+Image1.Picture:= nil;
+Image1.Enabled:=false;
+Button1.Enabled:=false;
+Button3.Enabled:=false;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -612,6 +665,7 @@ end;
   finally
     COM_Word := UnAssigned;
   end;
+Image1.Enabled:=true;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -655,35 +709,15 @@ end;
 CloseFile(sin_file);
 end;
 
-procedure TForm1.Button8Click(Sender: TObject);
+procedure TForm1.Button7Click(Sender: TObject);
 begin
-EmbeddedWB1.Navigate('http://fedpress.ru/');
-end;
-
-procedure TForm1.Button9Click(Sender: TObject);
-var
-a:variant;
-begin
-//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-name-2');
-//a.value:='Evgesha';
-//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-pass-2');
-//a.value:='ofccgj.';
-//a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-submit-10');
-//a.click;
-//Delay(5000);
-EmbeddedWB1.Navigate('http://fedpress.ru/node/add/news');
-end;
-
-procedure TForm1.FormActivate(Sender: TObject);
-begin
-//EmbeddedWB1.Navigate('D:\Client_site\news.htm');
-//EmbeddedWB1.Navigate('http://fedpress.ru/node/add/news');
-
+NewThread.addnews;
+Button3.Enabled:=true;
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-//EmbeddedWB1.Navigate('http://fedpress.ru/logout/');
+EmbeddedWB1.Navigate('http://fedpress.ru/logout/');
 Delay(3000);
 end;
 
@@ -693,22 +727,27 @@ begin
 //s:=GetCurrentDir;  //установелние текущего каталога
 if FileExists('D:\Client_site\Sinonims.dat')=false then  //проверка наличия файла
   begin
-    i:=FileCreate('D:\Client_site\Sinonims.dat');    //если нету то создать
-    FileClose(i);              //и закрыть чтоб ошибок небыло
+    showmessage('Словарь рубрик не найден!');
   end;
 end;
 
-procedure TForm1.FormDestroy(Sender: TObject);
+procedure TForm1.FormShow(Sender: TObject);
 begin
-//sldb.Free;
+  NewThread:=TNewThread.Create(true);
+  NewThread.FreeOnTerminate:=true;
+  NewThread.Priority:=tpNormal;
+  NewThread.fedpress;
+  Image1.Picture:=nil;
 end;
 
 procedure TForm1.Image1Click(Sender: TObject);
 var a:variant;
 begin
-a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-upload').click;
 a:=EmbeddedWB1.oleobject.document.getelementbyid('edit-field-images-news-0-upload');
+a.click;
 Image1.Picture.LoadFromFile(vartostr(a.value));
+Button1.Enabled:=true;
+
 end;
 
 procedure TForm1.ListBox1DblClick(Sender: TObject);
@@ -719,5 +758,62 @@ Form2.Edit1.Text:=ListBox1.Items[ListBox1.ItemIndex];
 Form2.Show;
 end;
 
+
+procedure TForm1.N3Click(Sender: TObject);
+begin
+Form3.show;
+end;
+
+procedure TForm1.N5Click(Sender: TObject);
+begin
+NewThread.logout;
+Form1.MainMenu1.Items[3].Visible:=false;
+Form1.MainMenu1.Items[2].Visible:=true;
+end;
+
+procedure TForm1.TabSheet3Show(Sender: TObject);
+var itm:integer;
+begin
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+while not Eof(sin_file) do
+begin
+  read(sin_file, sin_word);
+  if sin_word.parent=0 then begin
+    TreeView1.Items.Add(nil,sin_word.txt);
+  end;
+end;
+CloseFile(sin_file);
+end;
+
+procedure TForm1.TreeView1Change(Sender: TObject; Node: TTreeNode);
+var itm:integer;
+begin
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+itm:=TreeView1.Selected.AbsoluteIndex;
+while not Eof(sin_file) do
+begin
+  read(sin_file, sin_word);
+  if sin_word.txt=TreeView1.Items[itm].Text then begin
+    itm:=sin_word.id;
+    break;
+  end;
+end;
+
+//Reset(sin_file);
+ListBox2.Clear;
+Seek(sin_file,0);
+while not Eof(sin_file) do
+begin
+  read(sin_file, sin_word);
+  if sin_word.parent=itm then begin
+    Listbox2.Items.Add(sin_word.txt);
+  end;
+end;
+CloseFile(sin_file);
+end;
 
 end.

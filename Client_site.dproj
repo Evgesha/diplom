@@ -70,6 +70,9 @@
 			<DCC_RemoteDebug>true</DCC_RemoteDebug>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+			<VerInfo_Keys>CompanyName=Jenvik;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=РИА &quot;ФедералПресс&quot; - АвтоПубликатор;ProductName=РИА &quot;ФедералПресс&quot; - АвтоПубликатор;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Locale>1033</VerInfo_Locale>
 			<DCC_RemoteDebug>false</DCC_RemoteDebug>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -89,6 +92,9 @@
 			<DCCReference Include="edit.pas">
 				<Form>Form2</Form>
 				<FormType>dfm</FormType>
+			</DCCReference>
+			<DCCReference Include="Unit3.pas">
+				<Form>Form3</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
@@ -138,6 +144,15 @@
 					<Source>
 						<Source Name="MainSource">Client_site.dpr</Source>
 					</Source>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSDXE2.bpl">File C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSDXE2.bpl not found</Excluded_Packages>
+						<Excluded_Packages Name="C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSDeDXE2.bpl">File C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSDeDXE2.bpl not found</Excluded_Packages>
+						<Excluded_Packages Name="C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSExDXE2.bpl">File C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSExDXE2.bpl not found</Excluded_Packages>
+						<Excluded_Packages Name="C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSWizDXE2.bpl">File C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSWizDXE2.bpl not found</Excluded_Packages>
+						<Excluded_Packages Name="C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSXlsDXE2.bpl">File C:\Program Files\tmssoftware\TMS Component Pack\DelphiXE2\TMSXlsDXE2.bpl not found</Excluded_Packages>
+					</Excluded_Packages>
 				</Delphi.Personality>
 				<Deployment>
 					<DeployFile Class="ProjectOutput" Configuration="Debug" LocalName="Win32\Debug\Client_site.exe">

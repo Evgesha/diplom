@@ -1,10 +1,11 @@
 object Form1: TForm1
   AlignWithMargins = True
-  Left = 0
-  Top = 0
+  Left = 293
+  Top = 55
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = #1056#1048#1040' "'#1060#1077#1076#1077#1088#1072#1083#1055#1088#1077#1089#1089'" - '#1040#1074#1090#1086#1055#1091#1073#1083#1080#1082#1072#1090#1086#1088
-  ClientHeight = 540
-  ClientWidth = 743
+  ClientHeight = 536
+  ClientWidth = 738
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -48,97 +49,102 @@ object Form1: TForm1
     C1FF0000C1FF0000C1FF0000C1FF0000C1FF0000C1FF0000C1FF0000C1FF0000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
+  KeyPreview = True
   Menu = MainMenu1
   OldCreateOrder = False
-  OnActivate = FormActivate
+  Position = poDesigned
   OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Label7: TLabel
-    Left = 529
-    Top = 3
-    Width = 201
-    Height = 14
-    Caption = #1047#1076#1088#1072#1074#1089#1090#1074#1091#1081#1090#1077', '#1055#1083#1086#1090#1085#1080#1082#1086#1074#1072' '#1045#1074#1075#1077#1085#1080#1103
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 743
-    Height = 540
+    Width = 738
+    Height = 536
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 8
-    ExplicitWidth = 745
-    ExplicitHeight = 536
+    ExplicitWidth = 743
+    ExplicitHeight = 540
     object TabSheet1: TTabSheet
       Caption = #1056#1072#1079#1084#1077#1089#1090#1080#1090#1100' '#1085#1086#1074#1086#1089#1090#1100
-      ExplicitLeft = 8
-      ExplicitTop = 28
-      ExplicitWidth = 738
-      ExplicitHeight = 514
+      ExplicitWidth = 735
+      ExplicitHeight = 512
       object Label1: TLabel
         Left = 15
-        Top = 194
+        Top = 237
         Width = 57
         Height = 13
         Caption = #1047#1072#1075#1086#1083#1086#1074#1086#1082':'
       end
       object Label2: TLabel
         Left = 15
-        Top = 240
+        Top = 283
         Width = 71
         Height = 13
         Caption = #1058#1077#1082#1089#1090' '#1089#1090#1072#1090#1100#1080':'
       end
       object Label3: TLabel
-        Left = 248
-        Top = 74
+        Left = 264
+        Top = 121
         Width = 26
         Height = 13
         Caption = #1058#1101#1075#1080':'
       end
       object Label4: TLabel
         Left = 15
-        Top = 74
+        Top = 121
         Width = 46
         Height = 13
         Caption = #1056#1091#1073#1088#1080#1082#1080':'
       end
       object Label6: TLabel
         Left = 15
-        Top = 15
+        Top = 33
         Width = 73
         Height = 13
         Caption = #1055#1091#1090#1100' '#1082' '#1092#1072#1081#1083#1091':'
       end
+      object EmbeddedWB1: TEmbeddedWB
+        Left = 285
+        Top = 140
+        Width = 158
+        Height = 88
+        TabOrder = 14
+        DisableCtrlShortcuts = 'N'
+        DownloadOptions = []
+        UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]
+        About = ' EmbeddedWB http://bsalsa.com/'
+        PrintOptions.HTMLHeader.Strings = (
+          '<HTML></HTML>')
+        PrintOptions.Orientation = poPortrait
+        ControlData = {
+          4C000000B1490000F82300000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
       object Edit1: TEdit
         Left = 15
-        Top = 213
+        Top = 256
         Width = 474
         Height = 21
         TabOrder = 0
       end
       object Memo1: TMemo
         Left = 15
-        Top = 262
+        Top = 302
         Width = 707
         Height = 193
         ScrollBars = ssVertical
         TabOrder = 1
       end
       object Button2: TButton
-        Left = 220
-        Top = 474
+        Left = 215
+        Top = 399
         Width = 75
         Height = 25
         Caption = 'Button2'
@@ -147,26 +153,27 @@ object Form1: TForm1
         OnClick = Button2Click
       end
       object Button3: TButton
-        Left = 616
-        Top = 34
-        Width = 102
+        Left = 504
+        Top = 48
+        Width = 214
         Height = 25
         Caption = #1054#1090#1082#1088#1099#1090#1100' '#1092#1072#1081#1083'...'
+        Enabled = False
         TabOrder = 4
         OnClick = Button3Click
       end
       object ListBox1: TListBox
         Left = 15
-        Top = 93
-        Width = 205
+        Top = 140
+        Width = 218
         Height = 90
         ItemHeight = 13
         TabOrder = 5
         OnDblClick = ListBox1DblClick
       end
       object Button4: TButton
-        Left = 414
-        Top = 474
+        Left = 264
+        Top = 371
         Width = 75
         Height = 25
         Caption = #1056#1077#1076#1072#1082#1090#1086#1088
@@ -175,8 +182,8 @@ object Form1: TForm1
         OnClick = Button4Click
       end
       object Button5: TButton
-        Left = 277
-        Top = 474
+        Left = 237
+        Top = 430
         Width = 131
         Height = 25
         Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1088#1091#1073#1088#1080#1082#1091
@@ -185,8 +192,8 @@ object Form1: TForm1
         OnClick = Button5Click
       end
       object Button6: TButton
-        Left = 320
-        Top = 474
+        Left = 312
+        Top = 402
         Width = 131
         Height = 25
         Caption = #1042#1099#1074#1077#1089#1090#1080' sin-'#1092#1072#1081#1083
@@ -196,9 +203,9 @@ object Form1: TForm1
       end
       object Panel1: TPanel
         Left = 504
-        Top = 93
+        Top = 140
         Width = 218
-        Height = 141
+        Height = 137
         BiDiMode = bdLeftToRight
         BorderWidth = 1
         BorderStyle = bsSingle
@@ -218,12 +225,13 @@ object Form1: TForm1
           Left = 2
           Top = 2
           Width = 210
-          Height = 133
+          Height = 129
           Cursor = crHandPoint
           Hint = #1065#1077#1083#1082#1085#1080#1090#1077', '#1095#1090#1086#1073#1099' '#1076#1086#1073#1072#1074#1080#1090#1100' '#1080#1079#1086#1073#1088#1072#1078#1077#1085#1080#1077
           Align = alClient
           AutoSize = True
           DragCursor = crHandPoint
+          Enabled = False
           IncrementalDisplay = True
           ParentShowHint = False
           ShowHint = True
@@ -232,42 +240,19 @@ object Form1: TForm1
           OnClick = Image1Click
           ExplicitLeft = -22
           ExplicitTop = -2
+          ExplicitHeight = 133
         end
-      end
-      object DBNavigator1: TDBNavigator
-        Left = 220
-        Top = 93
-        Width = 25
-        Height = 90
-        VisibleButtons = [nbInsert, nbDelete, nbEdit]
-        Hints.Strings = (
-          'First record'
-          'Prior record'
-          'Next record'
-          'Last record'
-          #1044#1086#1073#1072#1074#1080#1090#1100' '#1088#1091#1073#1088#1080#1082#1091
-          #1059#1076#1072#1083#1080#1090#1100' '#1088#1091#1073#1088#1080#1082#1091
-          #1042#1099#1073#1088#1072#1090#1100' '#1088#1091#1073#1088#1080#1082#1091' '#1080#1079' '#1089#1087#1080#1089#1082#1072
-          'Post edit'
-          'Cancel edit'
-          'Refresh data'
-          'Apply updates'
-          'Cancel updates')
-        Kind = dbnVertical
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 11
       end
       object Edit3: TEdit
         Left = 15
-        Top = 36
-        Width = 586
+        Top = 52
+        Width = 474
         Height = 21
-        TabOrder = 12
+        TabOrder = 11
       end
       object Memo2: TMemo
-        Left = 496
-        Top = 262
+        Left = 498
+        Top = 302
         Width = 224
         Height = 193
         ScrollBars = ssVertical
@@ -276,103 +261,74 @@ object Form1: TForm1
       end
       object Memo3: TMemo
         Left = 264
-        Top = 93
+        Top = 140
         Width = 225
         Height = 90
-        TabOrder = 13
+        TabOrder = 12
       end
       object Button1: TButton
-        Left = 331
-        Top = 471
-        Width = 75
+        Left = 504
+        Top = 79
+        Width = 214
         Height = 25
         Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1100
+        Enabled = False
         TabOrder = 2
         OnClick = Button1Click
       end
-    end
-    object TabSheet2: TTabSheet
-      Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1088#1091#1073#1088#1080#1082
-      ImageIndex = 1
-      ExplicitWidth = 753
-      ExplicitHeight = 492
-      object Button8: TButton
-        Left = 152
-        Top = 404
-        Width = 75
+      object Button7: TButton
+        Left = 504
+        Top = 17
+        Width = 214
         Height = 25
-        Caption = #1053#1072' '#1089#1072#1081#1090
-        TabOrder = 0
-        OnClick = Button8Click
-      end
-      object Button9: TButton
-        Left = 432
-        Top = 404
-        Width = 99
-        Height = 25
-        Caption = #1047#1072#1083#1086#1075#1080#1085#1080#1090#1100#1089#1103
-        TabOrder = 1
-        OnClick = Button9Click
-      end
-      object EmbeddedWB1: TEmbeddedWB
-        Left = 3
-        Top = 3
-        Width = 713
-        Height = 348
-        TabOrder = 2
-        Visible = False
-        Silent = False
-        DisableCtrlShortcuts = 'N'
-        DownloadOptions = []
-        UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]
-        About = ' EmbeddedWB http://bsalsa.com/'
-        PrintOptions.HTMLHeader.Strings = (
-          '<HTML></HTML>')
-        PrintOptions.Orientation = poPortrait
-        ControlData = {
-          4C000000B1490000F82300000000000000000000000000000000000000000000
-          000000004C000000000000000000000001000000E0D057007335CF11AE690800
-          2B2E126208000000000000004C0000000114020000000000C000000000000046
-          8000000000000000000000000000000000000000000000000000000000000000
-          00000000000000000100000000000000000000000000000000000000}
+        Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1085#1086#1074#1086#1089#1090#1100
+        Enabled = False
+        TabOrder = 13
+        OnClick = Button7Click
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+      Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1088#1091#1073#1088#1080#1082
       ImageIndex = 2
-      TabVisible = False
-      ExplicitWidth = 753
-      ExplicitHeight = 492
-      object EmbeddedWB2: TEmbeddedWB
-        Left = 40
-        Top = 32
-        Width = 649
-        Height = 337
+      OnShow = TabSheet3Show
+      ExplicitWidth = 735
+      ExplicitHeight = 512
+      object TreeView1: TTreeView
+        Left = 3
+        Top = 3
+        Width = 350
+        Height = 446
+        Indent = 19
         TabOrder = 0
-        DisableCtrlShortcuts = 'N'
-        UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]
-        About = ' EmbeddedWB http://bsalsa.com/'
-        PrintOptions.HTMLHeader.Strings = (
-          '<HTML></HTML>')
-        PrintOptions.Orientation = poPortrait
-        ControlData = {
-          4C00000013430000D42200000000000000000000000000000000000000000000
-          000000004C000000000000000000000001000000E0D057007335CF11AE690800
-          2B2E126208000000000000004C0000000114020000000000C000000000000046
-          8000000000000000000000000000000000000000000000000000000000000000
-          00000000000000000100000000000000000000000000000000000000}
+        OnChange = TreeView1Change
+      end
+      object ListBox2: TListBox
+        Left = 384
+        Top = 3
+        Width = 348
+        Height = 446
+        ItemHeight = 13
+        TabOrder = 1
+      end
+      object BitBtn1: TBitBtn
+        Left = 384
+        Top = 424
+        Width = 348
+        Height = 25
+        Caption = #1059#1076#1072#1083#1080#1090#1100' '#1074#1072#1088#1080#1072#1085#1090' '#1085#1072#1087#1080#1089#1072#1085#1080#1103
+        TabOrder = 2
       end
     end
   end
   object OpenDialog1: TOpenDialog
-    Left = 32
-    Top = 496
+    Left = 40
+    Top = 424
   end
   object MainMenu1: TMainMenu
     BiDiMode = bdRightToLeft
     ParentBiDiMode = False
-    Left = 64
-    Top = 496
+    Left = 80
+    Top = 408
     object N1: TMenuItem
       Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
     end
@@ -380,7 +336,16 @@ object Form1: TForm1
       Caption = #1055#1086#1084#1086#1097#1100
     end
     object N3: TMenuItem
-      Caption = #1057#1084#1077#1085#1080#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+      Caption = #1040#1074#1090#1086#1088#1080#1079#1086#1074#1072#1090#1100#1089#1103
+      OnClick = N3Click
+    end
+    object N4: TMenuItem
+      Caption = #1047#1076#1088#1072#1074#1089#1090#1074#1091#1081#1090#1077', '#1055#1083#1086#1090#1085#1080#1082#1086#1074#1072' '#1045#1074#1075#1077#1085#1080#1103
+      Visible = False
+      object N5: TMenuItem
+        Caption = #1057#1084#1077#1085#1080#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+        OnClick = N5Click
+      end
     end
   end
 end
