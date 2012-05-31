@@ -42,13 +42,13 @@ Reset(sin_file);
 kol:=0;
  while not Eof(sin_file) do
     begin
-      inc(kol);
       read(sin_file, sin_word);
       c:=AnsiLowerCase(sin_word.txt);
       if c=AnsiLowerCase(Combobox1.Text) then
       begin flag:=sin_word.id;
             d:=sin_word.txt;
       end;
+      kol:=sin_word.id;
     end;
 sin_word.id:=kol+1;
 sin_word.parent:=flag;

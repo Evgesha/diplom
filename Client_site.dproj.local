@@ -19,10 +19,11 @@
     <Transaction>1899.12.30 00:00:00.000.734,C:\Documents and Settings\Jen\Мои документы\RAD Studio\Projects\Project1.dproj=D:\Client_site\Client_site.dproj</Transaction>
     <Transaction>1899.12.30 00:00:00.000.468,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLTypes.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.265,=D:\Client_site\Unit3.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.296,D:\Client_site\Unit3.pas=D:\Client_site\auto.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.328,D:\Client_site\Unit3.dfm=D:\Client_site\auto.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.015,D:\Client_site\Unit2.dfm=D:\Client_site\edit.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.765,=D:\Client_site\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.687,=D:\Client_site\Unit3.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.656,=D:\Client_site\SQLite3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.328,D:\Client_site\Unit3.dfm=D:\Client_site\auto.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.609,=D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLFunAgr.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.828,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLFunAgr.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.109,D:\Client_site\Client_site.dproj=D:\Client_site\Client_site.dproj</Transaction>
@@ -30,9 +31,8 @@
     <Transaction>1899.12.30 00:00:00.000.734,D:\Программы и Игры\SQLite4Delphi-0.4.4_full\source\SLTypes.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.906,=D:\Client_site\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.359,D:\Программы и Игры\delphiunicoderichedit\delphiunicoderichedit\GsvUnicodeRichEdit.pas=</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.734,=D:\Программы и Игры\delphiunicoderichedit\delphiunicoderichedit\GsvUnicodeRichEdit.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.296,D:\Client_site\Unit3.pas=D:\Client_site\auto.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.000,D:\Client_site\sqlite3.dll=</Transaction>
-    <Transaction>2012.05.30 00:56:53.765,=D:\Client_site\Unit3.pas</Transaction>
-    <Transaction>2012.05.30 01:19:44.687,=D:\Client_site\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.734,=D:\Программы и Игры\delphiunicoderichedit\delphiunicoderichedit\GsvUnicodeRichEdit.pas</Transaction>
   </Transactions>
 </BorlandProject>

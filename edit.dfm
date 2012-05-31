@@ -3,7 +3,7 @@ object Form2: TForm2
   Top = 274
   Caption = #1055#1088#1080#1074#1103#1079#1082#1072' '#1088#1091#1073#1088#1080#1082
   ClientHeight = 138
-  ClientWidth = 398
+  ClientWidth = 381
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -60,7 +60,7 @@ object Form2: TForm2
     Caption = #1056#1091#1073#1088#1080#1082#1091':'
   end
   object Label2: TLabel
-    Left = 152
+    Left = 143
     Top = 43
     Width = 67
     Height = 13
@@ -75,14 +75,14 @@ object Form2: TForm2
     TabOrder = 0
   end
   object ComboBox1: TComboBox
-    Left = 245
+    Left = 216
     Top = 40
     Width = 145
     Height = 21
     TabOrder = 1
   end
   object Button1: TButton
-    Left = 88
+    Left = 62
     Top = 88
     Width = 75
     Height = 25

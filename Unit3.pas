@@ -39,6 +39,7 @@ begin
 vl:=0;
   repeat
     try
+    Form1.Delay(5000);
     a:=Form1.EmbeddedWB1.oleobject.document.getelementbyid('edit-name-2');
     a.value:=Edit1.Text;
     a:=Form1.EmbeddedWB1.oleobject.document.getelementbyid('edit-pass-2');
@@ -51,7 +52,6 @@ vl:=0;
     end;
   until vl=1;
 Form1.Delay(5000);
-Form1.EmbeddedWB1.Navigate('http://fedpress.ru/');
 Form1.MainMenu1.Items[2].Visible:=false;
 Form1.MainMenu1.Items[3].Visible:=true;
 Form1.Button7.Enabled:=true;

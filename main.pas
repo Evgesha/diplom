@@ -65,6 +65,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure N3Click(Sender: TObject);
     procedure N5Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -198,6 +199,38 @@ begin
     Application.ProcessMessages;
     N := GetTickCount;
   until (N - F >= (Value mod 10)) or (N < F);
+end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+var itm:integer;
+    i:integer;
+begin
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+itm:=ListBox2.ItemIndex;
+i:=0;
+while not Eof(sin_file) do
+begin
+  Setlength(sin_mas,i+1);
+  read(sin_file, sin_word);
+  if sin_word.txt=ListBox2.Items[itm] then continue;
+  sin_mas[i]:=sin_word;
+  inc(i);
+end;
+CloseFile(sin_file);
+DeleteFile('D:\Client_site\Sinonims.dat');
+
+i:=FileCreate('D:\Client_site\Sinonims.dat');
+FileClose(i);
+AssignFile(sin_file,'D:\Client_site\Sinonims.dat'); //подключаемся к файлу
+Reset(sin_file);
+Seek(sin_file,0);
+for i:=0 to Length(sin_mas)-1 do
+  write(sin_file, sin_mas[i]);
+CloseFile(sin_file);
+
+Showmessage('Вариант написания удален');
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

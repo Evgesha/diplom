@@ -66,12 +66,8 @@ object Form1: TForm1
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 743
-    ExplicitHeight = 540
     object TabSheet1: TTabSheet
       Caption = #1056#1072#1079#1084#1077#1089#1090#1080#1090#1100' '#1085#1086#1074#1086#1089#1090#1100
-      ExplicitWidth = 735
-      ExplicitHeight = 512
       object Label1: TLabel
         Left = 15
         Top = 237
@@ -108,11 +104,12 @@ object Form1: TForm1
         Caption = #1055#1091#1090#1100' '#1082' '#1092#1072#1081#1083#1091':'
       end
       object EmbeddedWB1: TEmbeddedWB
-        Left = 285
-        Top = 140
-        Width = 158
-        Height = 88
+        Left = 280
+        Top = 152
+        Width = 153
+        Height = 57
         TabOrder = 14
+        Silent = False
         DisableCtrlShortcuts = 'N'
         DownloadOptions = []
         UserInterfaceOptions = [EnablesFormsAutoComplete, EnableThemes]
@@ -192,8 +189,8 @@ object Form1: TForm1
         OnClick = Button5Click
       end
       object Button6: TButton
-        Left = 312
-        Top = 402
+        Left = 280
+        Top = 90
         Width = 131
         Height = 25
         Caption = #1042#1099#1074#1077#1089#1090#1080' sin-'#1092#1072#1081#1083
@@ -291,8 +288,6 @@ object Form1: TForm1
       Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1088#1091#1073#1088#1080#1082
       ImageIndex = 2
       OnShow = TabSheet3Show
-      ExplicitWidth = 735
-      ExplicitHeight = 512
       object TreeView1: TTreeView
         Left = 3
         Top = 3
@@ -317,6 +312,7 @@ object Form1: TForm1
         Height = 25
         Caption = #1059#1076#1072#1083#1080#1090#1100' '#1074#1072#1088#1080#1072#1085#1090' '#1085#1072#1087#1080#1089#1072#1085#1080#1103
         TabOrder = 2
+        OnClick = BitBtn1Click
       end
     end
   end
